@@ -1,0 +1,29 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: springcloud-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+  instance:
+    instance-id: zuul-9527
+    prefer-ip-address: true
+info:
+  app.name: sdp-cloud
+  company.name: top.dpcoder
+zuul:
+  routes:
+    # 要加前缀xxx.serviceId，前缀是随便的
+    # serviceId和path的前缀要对应相等
+    mydept.serviceId: springcloud-provider-dept
+    mydept.path: /mydept/**
+  ignored-services: springcloud-provider-dept
+  prefix: /sdp
+ribbon:
+  eureka:
+    enable: false
+springcloud-provider-dept:
+  ribbon:
+    listOfServers: localhost:8001,localhost:8002
